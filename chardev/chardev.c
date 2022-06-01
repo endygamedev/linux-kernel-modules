@@ -28,7 +28,7 @@ int init_module(void);
 void cleanup_module(void);
 static int device_open(struct inode *inode, struct file *file);
 static int device_release(struct inode *inode, struct file *file);
-static ssize_t device_read(struct file *filp, char *buffer, size_t length, loff_t *offset);
+static ssize_t device_read(struct file *filp, char __user *buffer, size_t length, loff_t *offset);
 static ssize_t device_write(struct file *filp, const char *buffer, size_t length, loff_t *offset);
 
 
@@ -119,7 +119,7 @@ static int device_release(struct inode *inode, struct file *file) {
 
 /* Called when a process, which already opened the dev file, attempts to read from it. */
 static ssize_t device_read(struct file *filp,   /* see include/linux/fs.h */
-                           char *buffer,        /* buffer to fill with data */
+                           char __user *buffer,        /* buffer to fill with data */
                            size_t length,       /* length of the buffer */
                            loff_t *offset) {
     
